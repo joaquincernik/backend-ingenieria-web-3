@@ -1,0 +1,14 @@
+/home/joaquincernik/Desktop/ingenieriaWeb3/back/iw3/iwr/src/main/java/ar/edu/iua/iwr/BackendApplication.java
+/home/joaquincernik/Desktop/ingenieriaWeb3/back/iw3/iwr/src/main/java/ar/edu/iua/iwr/controllers/Constants.java
+/home/joaquincernik/Desktop/ingenieriaWeb3/back/iw3/iwr/src/main/java/ar/edu/iua/iwr/controllers/ProductRestController.java
+/home/joaquincernik/Desktop/ingenieriaWeb3/back/iw3/iwr/src/main/java/ar/edu/iua/iwr/model/Product.java
+/home/joaquincernik/Desktop/ingenieriaWeb3/back/iw3/iwr/src/main/java/ar/edu/iua/iwr/model/business/BusinessException.java
+/home/joaquincernik/Desktop/ingenieriaWeb3/back/iw3/iwr/src/main/java/ar/edu/iua/iwr/model/business/FoundException.java
+/home/joaquincernik/Desktop/ingenieriaWeb3/back/iw3/iwr/src/main/java/ar/edu/iua/iwr/model/business/IProductBusiness.java
+/home/joaquincernik/Desktop/ingenieriaWeb3/back/iw3/iwr/src/main/java/ar/edu/iua/iwr/model/business/NotFoundException.java
+/home/joaquincernik/Desktop/ingenieriaWeb3/back/iw3/iwr/src/main/java/ar/edu/iua/iwr/model/business/ProductBusiness.java
+/home/joaquincernik/Desktop/ingenieriaWeb3/back/iw3/iwr/src/main/java/ar/edu/iua/iwr/model/persistence/ProductRepository.java
+/home/joaquincernik/Desktop/ingenieriaWeb3/back/iw3/iwr/src/main/java/ar/edu/iua/iwr/security/SecurityConfiguration.java
+/home/joaquincernik/Desktop/ingenieriaWeb3/back/iw3/iwr/src/main/java/ar/edu/iua/iwr/util/IStandartResponseBusiness.java
+/home/joaquincernik/Desktop/ingenieriaWeb3/back/iw3/iwr/src/main/java/ar/edu/iua/iwr/util/StandartResponse.java
+/home/joaquincernik/Desktop/ingenieriaWeb3/back/iw3/iwr/src/main/java/ar/edu/iua/iwr/util/StandartResponseBusiness.java

@@ -38,6 +38,13 @@ public class ProductCli1JsonDeserializer extends StdDeserializer<ProductCli1> {
 				"product,description,product_description,product_name".split(","), null);
 		double price = JsonUtiles.getDouble(node, "product_price,price_product,price".split(","), 0);
 		boolean stock = JsonUtiles.getBoolean(node, "stock,in_stock".split(","), false);
+		
+		//chequeo que no venga vacio
+		if(productDesc == null) {
+			//hayq ue perfeccionar como tira wel error
+			throw new IOException("tenes que enviar un nombre de producto");
+		}
+		else {
 		r.setCodCli1(code);
 		r.setProduct(productDesc);
 		r.setPrecio(price);
@@ -52,6 +59,7 @@ public class ProductCli1JsonDeserializer extends StdDeserializer<ProductCli1> {
 			}
 		}
 		return r;
+		}
 	}
 
 }

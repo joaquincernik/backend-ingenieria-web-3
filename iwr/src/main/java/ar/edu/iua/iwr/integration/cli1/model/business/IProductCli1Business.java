@@ -11,5 +11,8 @@ public interface IProductCli1Business {
 	public ProductCli1 load(String codCli1) throws NotFoundException, BusinessException;
 	public List<ProductCli1> list() throws BusinessException;
 	public ProductCli1 add(ProductCli1 product) throws FoundException, BusinessException;
-
+	
+	//agregamos un nuevo serivcio
+	//va a ser nuestro add, recibo un json
+	public ProductCli1 addExternal(String json) throws FoundException, BusinessException;
 }

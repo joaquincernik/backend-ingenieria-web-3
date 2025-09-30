@@ -1,3 +1,5 @@
 iwr.zip
 lombok.jar
 spring/
+target/
+iwr/src/main/resources/

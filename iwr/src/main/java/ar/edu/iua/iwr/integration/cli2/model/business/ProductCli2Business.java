@@ -63,6 +63,16 @@ public class ProductCli2Business implements IProductCli2Business {
 	}
 	
 	@Override
+	public List<ProductCli2> listByPrice(Double start, Double end) throws BusinessException {
+		try {
+			return productDAO.findByPrecioBetween(start, end);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw BusinessException.builder().ex(e).build();
+		}
+	}
+	
+	@Override
 	public List<ProductCli2SlimView> listSlim() throws BusinessException {
 		try {
 			//la salida va a ser por consola nomas

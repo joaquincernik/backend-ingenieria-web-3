@@ -82,7 +82,23 @@ public class ProductCli2RestController extends BaseRestController {
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+
+	// http://localhost:8080/api/v1/integration/cli2/products/list-by-price?start-price=10&end-price=20
+
+		@GetMapping(value = "/list-by-price", produces = MediaType.APPLICATION_JSON_VALUE)
+		public ResponseEntity<?> listByPrice(
+				@RequestParam(name = "start-price", required = false, defaultValue = "0.0") Double start,
+				@RequestParam(name = "end-price", required = false, defaultValue = "500000000") Double end) {
+			try {
+				
+			return new ResponseEntity<>(productBusiness.listByPrice(start, end), HttpStatus.OK);
+				
+			} catch (BusinessException  e) {
+				return new ResponseEntity<>(response.build(HttpStatus.INTERNAL_SERVER_ERROR, e, e.getMessage()),
+						HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
+
 	// nuevo api B2B, OTRO sistema nos envie anosotros un json, un producto de otro lugar con otras codificaciones
 		@PostMapping(value = "/b2b")
 		public ResponseEntity<?> addExternal(HttpEntity<String> httpEntity) {

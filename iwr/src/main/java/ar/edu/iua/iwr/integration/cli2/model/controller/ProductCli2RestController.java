@@ -8,10 +8,13 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,10 +24,12 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
 import ar.edu.iua.iwr.controllers.BaseRestController;
 import ar.edu.iua.iwr.controllers.Constants;
+import ar.edu.iua.iwr.integration.cli1.model.ProductCli1;
 import ar.edu.iua.iwr.integration.cli2.model.ProductCli2;
 import ar.edu.iua.iwr.integration.cli2.model.ProductCli2SlimV1JsonSerializer;
 import ar.edu.iua.iwr.integration.cli2.model.business.IProductCli2Business;
 import ar.edu.iua.iwr.model.business.BusinessException;
+import ar.edu.iua.iwr.model.business.FoundException;
 import ar.edu.iua.iwr.util.IStandartResponseBusiness;
 import ar.edu.iua.iwr.util.JsonUtiles;
 import lombok.extern.slf4j.Slf4j;
@@ -77,5 +82,23 @@ public class ProductCli2RestController extends BaseRestController {
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	// nuevo api B2B, OTRO sistema nos envie anosotros un json, un producto de otro lugar con otras codificaciones
+		@PostMapping(value = "/b2b")
+		public ResponseEntity<?> addExternal(HttpEntity<String> httpEntity) {
+			//en vez de recibir un request body y usar el por defecto le decimos que usamos el nuestro
+			//el string body lo catcheamos con http entyty
+			try {
+				ProductCli2 response = productBusiness.addExternal(httpEntity.getBody()); //creo instancia de product cli1
+				HttpHeaders responseHeaders = new HttpHeaders(); //darle al respuesta que le damos siempre
+			//responseHeaders.set("location", Constants.URL_INTEGRATION_CLI1 + "/products/" + response.getCodCli1());
+				return new ResponseEntity<>(responseHeaders, HttpStatus.CREATED);
+			} catch (BusinessException e) {
+				return new ResponseEntity<>(response.build(HttpStatus.INTERNAL_SERVER_ERROR, e, e.getMessage()),
+						HttpStatus.INTERNAL_SERVER_ERROR);
+			} catch (FoundException e) {
+				return new ResponseEntity<>(response.build(HttpStatus.FOUND, e, e.getMessage()), HttpStatus.FOUND);
+			}
+		}
 
 }

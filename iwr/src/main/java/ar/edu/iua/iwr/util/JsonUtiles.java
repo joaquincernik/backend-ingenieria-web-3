@@ -9,6 +9,11 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Date;
+
 public final class JsonUtiles {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static ObjectMapper getObjectMapper(Class clazz, StdSerializer ser, String dateFormat) {
@@ -95,6 +100,67 @@ public final class JsonUtiles {
 		if (r == null)
 			r = defaultValue;
 		return r;
+	}
+	
+	
+	//alerta chatificado
+	public static Date getDate(JsonNode node, String[] strings, Date defaultValue) {
+	    if (node == null || strings == null) return defaultValue;
+
+	    for (String attr : strings) {
+	        if (attr == null) continue;
+	        JsonNode v = node.get(attr);
+	        if (v == null || v.isNull()) continue;
+
+	        // 1) Epoch (ms o s)
+	        if (v.isNumber()) {
+	            long raw = v.asLong();
+	            // si parece segundos (<= 10 dígitos), convierto a ms
+	            if (Math.abs(raw) < 1_000_000_000_000L) raw *= 1000L;
+	            return new Date(raw);
+	        }
+
+	        // 2) Texto → intentar varios formatos
+	        if (v.isTextual()) {
+	            String s = v.asText().trim();
+	            if (s.isEmpty()) continue;
+
+	            // ISO con Z/offset (p.ej. 2025-10-31T14:30:00Z o ...-03:00)
+	            try { return Date.from(Instant.parse(s)); } catch (Exception ignore) {}
+	            try { return Date.from(OffsetDateTime.parse(s).toInstant()); } catch (Exception ignore) {}
+	            try { return Date.from(ZonedDateTime.parse(s).toInstant()); } catch (Exception ignore) {}
+
+	            // ISO local sin zona: 2025-10-31T14:30:00
+	            try {
+	                LocalDateTime ldt = LocalDateTime.parse(s, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+	                return Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant());
+	            } catch (Exception ignore) {}
+
+	            // Solo fecha: 2025-10-31
+	            try {
+	                LocalDate d = LocalDate.parse(s, DateTimeFormatter.ISO_LOCAL_DATE);
+	                return Date.from(d.atStartOfDay(ZoneId.systemDefault()).toInstant());
+	            } catch (Exception ignore) {}
+
+	            // Formatos comunes extra
+	            try {
+	                DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss[.SSS]");
+	                LocalDateTime ldt = LocalDateTime.parse(s, f);
+	                return Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant());
+	            } catch (Exception ignore) {}
+	            try {
+	                // ej: 2025-10-31T14:30:00-0300
+	                DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ");
+	                return Date.from(OffsetDateTime.parse(s, f).toInstant());
+	            } catch (Exception ignore) {}
+	            try {
+	                // ej: 2025-10-31T14:30:00-03:00
+	                DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX");
+	                return Date.from(OffsetDateTime.parse(s, f).toInstant());
+	            } catch (Exception ignore) {}
+	        }
+	    }
+	    return defaultValue;
 	}
 
 }

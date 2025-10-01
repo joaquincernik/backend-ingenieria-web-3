@@ -38,6 +38,7 @@ public class ProductCli2JsonDeserializer extends StdDeserializer<ProductCli2> {
 		String productDesc = JsonUtiles.getString(node,
 				"product,description,product_description,product_name".split(","), null);
 		double price = JsonUtiles.getDouble(node, "product_price,price_product,price".split(","), 0);
+
 		boolean stock = JsonUtiles.getBoolean(node, "stock,in_stock".split(","), false);
 		
 		//chequeo que no venga vacio

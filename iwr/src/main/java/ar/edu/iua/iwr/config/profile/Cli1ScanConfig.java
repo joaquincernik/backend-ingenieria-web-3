@@ -15,17 +15,17 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 //todo lo que esta dentro de eso usalo
 //repositorios
-@EnableJpaRepositories(basePackages = "ar.edu.iua.iwr", 
+@EnableJpaRepositories(basePackages = "ar.edu.iua.iwr.integration.cli1.model.persistence", 
 excludeFilters = {
-		@ComponentScan.Filter(type = FilterType.REGEX, pattern = "ar\\.edu\\.iua\\.iwr\\.integration\\.cli2\\..*")
+		//@ComponentScan.Filter(type = FilterType.REGEX, pattern = "ar\\.edu\\.iua\\.iwr\\.integration\\.cli2\\..*")
 		
 })
 
 
 //para que se cargen las entidades
 @EntityScan(basePackages = {
-		"ar.edu.iua.iwr.model",
-		"ar.edu.iua.iwr.auth",
+		//"ar.edu.iua.iwr.model",
+		//"ar.edu.iua.iwr.auth",
 		"ar.edu.iua.iwr.integration.cli1.model"
 })
 

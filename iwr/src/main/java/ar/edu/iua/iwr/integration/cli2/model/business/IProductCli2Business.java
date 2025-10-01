@@ -1,10 +1,10 @@
 package ar.edu.iua.iwr.integration.cli2.model.business;
 
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
-import ar.edu.iua.iwr.integration.cli1.model.ProductCli1;
 import ar.edu.iua.iwr.integration.cli2.model.ProductCli2;
 import ar.edu.iua.iwr.integration.cli2.model.ProductCli2SlimView;
 import ar.edu.iua.iwr.model.business.BusinessException;

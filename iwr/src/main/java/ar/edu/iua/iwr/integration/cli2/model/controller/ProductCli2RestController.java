@@ -1,5 +1,7 @@
 package ar.edu.iua.iwr.integration.cli2.model.controller;
 
+import java.io.IOException;
+
 //import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 
 import java.util.Calendar;
@@ -24,7 +26,6 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
 import ar.edu.iua.iwr.controllers.BaseRestController;
 import ar.edu.iua.iwr.controllers.Constants;
-import ar.edu.iua.iwr.integration.cli1.model.ProductCli1;
 import ar.edu.iua.iwr.integration.cli2.model.ProductCli2;
 import ar.edu.iua.iwr.integration.cli2.model.ProductCli2SlimV1JsonSerializer;
 import ar.edu.iua.iwr.integration.cli2.model.business.IProductCli2Business;
@@ -110,11 +111,13 @@ public class ProductCli2RestController extends BaseRestController {
 			//responseHeaders.set("location", Constants.URL_INTEGRATION_CLI1 + "/products/" + response.getCodCli1());
 				return new ResponseEntity<>(responseHeaders, HttpStatus.CREATED);
 			} catch (BusinessException e) {
+				//log.error(e.getMessage());
 				return new ResponseEntity<>(response.build(HttpStatus.INTERNAL_SERVER_ERROR, e, e.getMessage()),
 						HttpStatus.INTERNAL_SERVER_ERROR);
 			} catch (FoundException e) {
 				return new ResponseEntity<>(response.build(HttpStatus.FOUND, e, e.getMessage()), HttpStatus.FOUND);
 			}
+			
 		}
 
 }

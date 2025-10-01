@@ -1,5 +1,7 @@
 package ar.edu.iua.iwr.integration.cli2.model.business;
 
+import java.io.IOException;
+
 //import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 
 import java.util.Date;
@@ -93,15 +95,15 @@ public class ProductCli2Business implements IProductCli2Business {
 			//transformamos el json que puede venir con atributos difernetes y creamos
 			ObjectMapper mapper = JsonUtiles.getObjectMapper(ProductCli2.class,
 					new ProductCli2JsonDeserializer(ProductCli2.class, categoryBusiness),null);
-			ProductCli2 product = null;
 			try {
+				ProductCli2 product = null;
 				product = mapper.readValue(json, ProductCli2.class);
-			} catch (JsonProcessingException e) {
-				log.error(e.getMessage(), e);
-				throw BusinessException.builder().ex(e).build();
-			}
+				return add(product);
+			} catch (IOException e) {
+				//log.error(e.getMessage(), e);
+				throw BusinessException.builder().message(e.getMessage()).build();
+			} 
 
-			return add(product);
 
 		}
 

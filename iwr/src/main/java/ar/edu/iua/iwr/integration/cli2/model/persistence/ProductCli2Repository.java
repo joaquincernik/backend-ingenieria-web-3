@@ -16,7 +16,7 @@ public interface ProductCli2Repository extends JpaRepository<ProductCli2, Long> 
 	//orden by el que se venda mas rapido
 	public List<ProductCli2> findByExpirationDateBeforeOrderByExpirationDateDesc(Date expirationDate);
 	
-	public List<ProductCli2> findByPrecioBetween(Double min, Double max );
+	public List<ProductCli2> findByPrecioBetweenOrderByPrecioAsc(Double min, Double max );
 	//pryectar es decidir que atributos se seleccionan como parte de la consulta sql
 	//cuando hago select * elegimos todo
 	public List<ProductCli2SlimView> findByOrderByPrecioDesc();
